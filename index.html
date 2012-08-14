@@ -1,12 +1,13 @@
 <html>
 <head>
   <script src='jquery.js'></script>
+  <script src='grid.js'></script>
   <style>
     body { margin:0; padding:0; }
     .grid { position:relative; display:block; background: #f0f0f0;}
     .vertical { min-width:768px; max-width:1080px; }
     .horizontal { min-width:1024px; max-width:1920px; }
-    .cell { background:#f0f; display:block; position:absolute; overflow:none; }
+    .cell { background:#333; display:block; position:absolute; overflow:none; }
   </style>
 </head>
 
@@ -20,7 +21,9 @@
       <p>hello world</p>
     </div>
     <div class='cell' data-x="2" data-y="0">
-      <p>hello world</p>
+      <div class='content'>
+        <p>hello world</p>
+      </div>
     </div>
     <div class='cell' data-x="3" data-y="0" style='background:#9f9'>
       <p>hello world</p>
@@ -68,42 +71,6 @@
 </body>
 
 <script>
-var ratio_w = 1920;
-var ratio_h = 1080;
-
-function resize() {
-  var width  = $('.grid').outerWidth();
-  var height = $('.grid').outerHeight();
-  var vertical = $('.grid.vertical').length;
-  if (vertical) {
-    $('.grid').css('width', height * (ratio_h/ratio_w));
-  } else {
-    $('.grid').css('height', width * (ratio_h/ratio_w));
-  }
-  layout_cells();
-}
-
-function layout_cells() {
-  var gridw = $('.grid').outerWidth();
-  var gridh = $('.grid').outerHeight();
-  var vertical = $('.grid.vertical').length ? true : false;
-  var cellw = vertical ? gridw/4 : gridw/5;
-  var cellh = vertical ? gridh/5 : gridh/4;
-
-  $('.cell').each(function(){
-    var x = $(this).data('x');
-    var y = $(this).data('y');
-    var w = $(this).data('w') || 1;
-    var h = $(this).data('h') || 1;
-    $(this).css({
-      top: y * cellh + 'px', 
-      left: x * cellw + "px", 
-      width: w * cellw + 'px', 
-      height: h * cellh + "px"
-    })
-  });
-}
-
 $(document).ready(function(){
   $(window).on('resize', resize).trigger('resize');  
 })
