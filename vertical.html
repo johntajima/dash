@@ -3,15 +3,15 @@
   <script src='jquery.js'></script>
   <style>
     body { margin:0; padding:0; }
-    .grid { position:relative; display:block; background: #f0f0f0;}
-    .vertical { min-width:768px; max-width:1080px; }
+    .grid { position:relative; display:block; background: #f0f0f0; height:100%; width: 100%;}
+    .vertical { min-height:1024px; max-height:1920px; }
     .horizontal { min-width:1024px; max-width:1920px; }
     .cell { background:#f0f; display:block; position:absolute; overflow:none; }
   </style>
 </head>
 
 <body>
-  <div class='grid horizontal'>
+  <div class='grid vertical'>
     <!-- row 1 -->
     <div class='cell' data-x="0" data-y="0" style='background:#f6f'>
       <p>hello world</p>
@@ -25,9 +25,6 @@
     <div class='cell' data-x="3" data-y="0" style='background:#9f9'>
       <p>hello world</p>
     </div>
-    <div class='cell' data-x="4" data-y="0" style='background:#ff9'>
-      <p>hello world</p>
-    </div>
 
     <!-- row 2 -->
     <div class='cell' data-x="0" data-y="1" data-w="2" data-h="1" style='background:#398'>
@@ -35,9 +32,6 @@
     </div>
     <div class='cell' data-x="2" data-y="1" data-w="2" data-h="1" style='background:#f69'>
       <p>wide hello world</p>
-    </div>
-    <div class='cell' data-x="4" data-y="1" style='background:#ff0'>
-      <p>hello world</p>
     </div>
 
     <!-- row 3 -->
@@ -50,9 +44,6 @@
     <div class='cell' data-x="3" data-y="2" style='background:#9f9'>
       <p>hello world</p>
     </div>
-    <div class='cell' data-x="4" data-y="2" style='background:#ff9'>
-      <p>hello world</p>
-    </div>
 
     <!-- row 4 -->
     <div class='cell' data-x="2" data-y="3" style='background:#6f8'>
@@ -61,9 +52,22 @@
     <div class='cell' data-x="3" data-y="3" style='background:#fa3'>
       <p>hello world</p>
     </div>
-    <div class='cell' data-x="4" data-y="3" style='background:#f99'>
+
+    <!-- row 5 -->
+    <div class='cell' data-x="0" data-y="4" style='background:#6f8'>
       <p>hello world</p>
     </div>
+    <div class='cell' data-x="1" data-y="4" style='background:#666'>
+      <p>hello world</p>
+    </div>
+    <div class='cell' data-x="2" data-y="4" style='background:#999'>
+      <p>hello world</p>
+    </div>
+    <div class='cell' data-x="3" data-y="4" style='background:#ccc'>
+      <p>hello world</p>
+    </div>
+    
+
   </div>
 </body>
 
