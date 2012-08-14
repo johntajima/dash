@@ -1,0 +1,109 @@
+<html>
+<head>
+  <script src='jquery.js'></script>
+  <style>
+    .grid { position:relative; display:block; background: #f0f0f0;}
+    .vertical { min-width: 768px; max-width:1080px; min-height:1024px; max-height:1920px;}
+    .horizontal { min-height: 768px; max-height:1080px; min-width:1024px; max-height:1920px;}
+
+    .cell { background:#f0f; display:block; position:absolute; overflow:none; }
+
+
+  </style>
+</head>
+
+<body>
+  <div class='grid horizontal'>
+    <!-- row 1 -->
+    <div class='cell' data-x="0" data-y="0" data-w="1" data-h="1" style='background:#f0f'>
+      <p>hello world</p>
+    </div>
+    <div class='cell' data-x="1" data-y="0" data-w="1" data-h="1" style='background:#f0f'>
+      <p>hello world</p>
+    </div>
+    <div class='cell' data-x="2" data-y="0" data-w="1" data-h="1">
+      <p>hello world</p>
+    </div>
+    <div class='cell' data-x="3" data-y="0" data-w="1" data-h="1" style='background:#9f9'>
+      <p>hello world</p>
+    </div>
+    <div class='cell' data-x="4" data-y="0" data-w="1" data-h="1" style='background:#ff9'>
+      <p>hello world</p>
+    </div>
+
+    <!-- row 2 -->
+    <div class='cell' data-x="0" data-y="1" data-w="2" data-h="1" style='background:#398'>
+      <p>wide hello world</p>
+    </div>
+    <div class='cell' data-x="2" data-y="1" data-w="2" data-h="1" style='background:#f69'>
+      <p>wide hello world</p>
+    </div>
+    <div class='cell' data-x="4" data-y="1" data-w="1" data-h="1" style='background:#ff0'>
+      <p>hello world</p>
+    </div>
+
+    <!-- row 3 -->
+    <div class='cell' data-x="0" data-y="2" data-w="2" data-h="2" style='background:#333'>
+      <p>hello world</p>
+    </div>
+    <div class='cell' data-x="2" data-y="2" data-w="1" data-h="1">
+      <p>hello world</p>
+    </div>
+    <div class='cell' data-x="3" data-y="2" data-w="1" data-h="1" style='background:#9f9'>
+      <p>hello world</p>
+    </div>
+    <div class='cell' data-x="4" data-y="2" data-w="1" data-h="1" style='background:#ff9'>
+      <p>hello world</p>
+    </div>
+
+    <!-- row 4 -->
+    <div class='cell' data-x="2" data-y="3" data-w="1" data-h="1" style='background:#6f8'>
+      <p>hello world</p>
+    </div>
+    <div class='cell' data-x="3" data-y="3" data-w="1" data-h="1" style='background:#fa3'>
+      <p>hello world</p>
+    </div>
+    <div class='cell' data-x="4" data-y="3" data-w="1" data-h="1" style='background:#f99'>
+      <p>hello world</p>
+    </div>
+  </div>
+</body>
+
+<script>
+function resize() {
+  var width  = $('.grid').outerWidth();
+  var height = $('.grid').outerHeight();
+  var ratio = width > height ? (4/5) : (5/4)
+  /* not right - need 1920x1080 ratio */
+  $('.grid').css('height', width * ratio);  
+  layout();
+}
+
+function layout() {
+  var gridw = $('.grid').outerWidth();
+  var gridh = $('.grid').outerHeight();
+  var vertical = $('.grid.vertical').length ? true : false;
+  var cellw = vertical ? gridw/4 : gridw/5;
+  var cellh = vertical ? gridh/5 : gridh/4;
+
+  $('.cell').each(function(){
+    var x = $(this).data('x');
+    var y = $(this).data('y');
+    var w = $(this).data('w');
+    var h = $(this).data('h');
+    $(this).css({
+      top: y * cellh + 'px', 
+      left: x * cellw + "px", 
+      width: cellw * w + 'px', 
+      height: cellh * h + "px"
+    })
+  });
+}
+
+$(document).ready(function(){
+  resize();
+  $(window).on('resize', resize);  
+})
+</script>
+
+</html>
