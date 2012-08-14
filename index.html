@@ -2,32 +2,30 @@
 <head>
   <script src='jquery.js'></script>
   <style>
+    body { margin:0; padding:0; }
     .grid { position:relative; display:block; background: #f0f0f0;}
-    .vertical { min-width: 768px; max-width:1080px; min-height:1024px; max-height:1920px;}
-    .horizontal { min-height: 768px; max-height:1080px; min-width:1024px; max-height:1920px;}
-
+    .vertical { min-width:768px; max-width:1080px; }
+    .horizontal { min-width:1024px; max-width:1920px; }
     .cell { background:#f0f; display:block; position:absolute; overflow:none; }
-
-
   </style>
 </head>
 
 <body>
   <div class='grid horizontal'>
     <!-- row 1 -->
-    <div class='cell' data-x="0" data-y="0" data-w="1" data-h="1" style='background:#f0f'>
+    <div class='cell' data-x="0" data-y="0" style='background:#f6f'>
       <p>hello world</p>
     </div>
-    <div class='cell' data-x="1" data-y="0" data-w="1" data-h="1" style='background:#f0f'>
+    <div class='cell' data-x="1" data-y="0" style='background:#6ff'>
       <p>hello world</p>
     </div>
-    <div class='cell' data-x="2" data-y="0" data-w="1" data-h="1">
+    <div class='cell' data-x="2" data-y="0">
       <p>hello world</p>
     </div>
-    <div class='cell' data-x="3" data-y="0" data-w="1" data-h="1" style='background:#9f9'>
+    <div class='cell' data-x="3" data-y="0" style='background:#9f9'>
       <p>hello world</p>
     </div>
-    <div class='cell' data-x="4" data-y="0" data-w="1" data-h="1" style='background:#ff9'>
+    <div class='cell' data-x="4" data-y="0" style='background:#ff9'>
       <p>hello world</p>
     </div>
 
@@ -38,7 +36,7 @@
     <div class='cell' data-x="2" data-y="1" data-w="2" data-h="1" style='background:#f69'>
       <p>wide hello world</p>
     </div>
-    <div class='cell' data-x="4" data-y="1" data-w="1" data-h="1" style='background:#ff0'>
+    <div class='cell' data-x="4" data-y="1" style='background:#ff0'>
       <p>hello world</p>
     </div>
 
@@ -46,40 +44,42 @@
     <div class='cell' data-x="0" data-y="2" data-w="2" data-h="2" style='background:#333'>
       <p>hello world</p>
     </div>
-    <div class='cell' data-x="2" data-y="2" data-w="1" data-h="1">
+    <div class='cell' data-x="2" data-y="2">
       <p>hello world</p>
     </div>
-    <div class='cell' data-x="3" data-y="2" data-w="1" data-h="1" style='background:#9f9'>
+    <div class='cell' data-x="3" data-y="2" style='background:#9f9'>
       <p>hello world</p>
     </div>
-    <div class='cell' data-x="4" data-y="2" data-w="1" data-h="1" style='background:#ff9'>
+    <div class='cell' data-x="4" data-y="2" style='background:#ff9'>
       <p>hello world</p>
     </div>
 
     <!-- row 4 -->
-    <div class='cell' data-x="2" data-y="3" data-w="1" data-h="1" style='background:#6f8'>
+    <div class='cell' data-x="2" data-y="3" style='background:#6f8'>
       <p>hello world</p>
     </div>
-    <div class='cell' data-x="3" data-y="3" data-w="1" data-h="1" style='background:#fa3'>
+    <div class='cell' data-x="3" data-y="3" style='background:#fa3'>
       <p>hello world</p>
     </div>
-    <div class='cell' data-x="4" data-y="3" data-w="1" data-h="1" style='background:#f99'>
+    <div class='cell' data-x="4" data-y="3" style='background:#f99'>
       <p>hello world</p>
     </div>
   </div>
 </body>
 
 <script>
+var ratio_w = 1920;
+var ratio_h = 1080;
+
 function resize() {
   var width  = $('.grid').outerWidth();
   var height = $('.grid').outerHeight();
-  var ratio = width > height ? (4/5) : (5/4)
-  /* not right - need 1920x1080 ratio */
-  $('.grid').css('height', width * ratio);  
-  layout();
+  var ratio = $('.grid.vertical').length ? (ratio_w / ratio_h) : (ratio_h / ratio_w);
+  $('.grid').css('height', width * ratio);
+  layout_cells();
 }
 
-function layout() {
+function layout_cells() {
   var gridw = $('.grid').outerWidth();
   var gridh = $('.grid').outerHeight();
   var vertical = $('.grid.vertical').length ? true : false;
@@ -89,20 +89,19 @@ function layout() {
   $('.cell').each(function(){
     var x = $(this).data('x');
     var y = $(this).data('y');
-    var w = $(this).data('w');
-    var h = $(this).data('h');
+    var w = $(this).data('w') || 1;
+    var h = $(this).data('h') || 1;
     $(this).css({
       top: y * cellh + 'px', 
       left: x * cellw + "px", 
-      width: cellw * w + 'px', 
-      height: cellh * h + "px"
+      width: w * cellw + 'px', 
+      height: h * cellh + "px"
     })
   });
 }
 
 $(document).ready(function(){
-  resize();
-  $(window).on('resize', resize);  
+  $(window).on('resize', resize).trigger('resize');  
 })
 </script>
 
